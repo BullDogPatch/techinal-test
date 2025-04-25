@@ -2,6 +2,7 @@ import { Routes, Route } from 'react-router-dom';
 import TaskList from './components/TaskList';
 import './App.css';
 import TaskPage from './pages/TaskPage';
+import CreateTaskPage from './pages/CreateTaskPage';
 
 export interface SingleTask {
   id: number;
@@ -17,6 +18,7 @@ function App() {
       <Routes>
         <Route path='/' element={<TaskList />} />
         <Route path='/task/:id' element={<TaskPage />} />
+        <Route path='/create' element={<CreateTaskPage />} />
       </Routes>
     </>
   );

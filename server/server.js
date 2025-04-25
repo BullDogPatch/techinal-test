@@ -45,5 +45,19 @@ app.get('/tasks/:id', async (req, res) => {
   }
 });
 
+app.post('/create-task', async (req, res) => {
+  const { title, description, status, due_date } = req.body;
+  try {
+    const { rows } = await db.query(
+      `INSERT INTO tasks (title, description, status, due_date) VALUES ($1, $2, $3, $4) RETURNING *`,
+      [title, description, status, due_date]
+    );
+    res.json(rows[0]);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ message: 'Failed to post task' });
+  }
+});
+
 const PORT = 8080;
 app.listen(PORT, () => console.log(`Listening on PORT ${PORT}`));

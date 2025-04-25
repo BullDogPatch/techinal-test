@@ -10,10 +10,12 @@ const fetchTask = async (id: string | undefined): Promise<SingleTask> => {
 
 const TaskPage = () => {
   const { id } = useParams();
-  const { data: task } = useQuery<SingleTask>({
+  const { data: task, isPending } = useQuery<SingleTask>({
     queryKey: ['task', id],
     queryFn: () => fetchTask(id),
   });
+
+  if (isPending) return <p>Loading...</p>;
 
   return (
     <div>

@@ -10,24 +10,14 @@ const fetchTasks = async () => {
 };
 
 const TaskList = () => {
-  // const [tasks, setTasks] = useState<SingleTask[]>([]);
-
-  // useEffect(() => {
-  //   const fetchTasks = async () => {
-  //     const response = await fetch('http://localhost:8080/tasks');
-  //     const data = await response.json();
-  //     setTasks(data);
-  //   };
-  //   fetchTasks();
-  // }, []);
-
-  const { data: tasks, isLoading } = useQuery<SingleTask[]>({
+  const { data: tasks, isPending } = useQuery<SingleTask[]>({
     queryKey: ['tasks'],
     queryFn: fetchTasks,
+    staleTime: 1000 * 60 * 5,
     refetchInterval: 5000,
   });
 
-  if (isLoading) return <p>Loading...</p>;
+  if (isPending) return <p>Loading...</p>;
 
   return (
     <div>

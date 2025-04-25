@@ -1,5 +1,7 @@
+import { Routes, Route } from 'react-router-dom';
 import TaskList from './components/TaskList';
 import './App.css';
+import TaskPage from './pages/TaskPage';
 
 export interface SingleTask {
   id: number;
@@ -12,7 +14,10 @@ export interface SingleTask {
 function App() {
   return (
     <>
-      <TaskList />
+      <Routes>
+        <Route path='/' element={<TaskList />} />
+        <Route path='/task/:id' element={<TaskPage />} />
+      </Routes>
     </>
   );
 }

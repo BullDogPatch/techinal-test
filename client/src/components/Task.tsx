@@ -1,7 +1,13 @@
 import { SingleTask } from '../App';
 
 const Task = ({ task }: { task: SingleTask }) => {
-  return <div>{task.description}</div>;
+  return (
+    <div>
+      <p>{task.description}</p>
+      <p>Status: {task.status}</p>
+      <p>Due Date: {task.due_date}</p>
+    </div>
+  );
 };
 
 export default Task;

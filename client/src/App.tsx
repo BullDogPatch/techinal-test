@@ -1,5 +1,5 @@
-import './App.css';
 import TaskList from './components/TaskList';
+import './App.css';
 
 export interface SingleTask {
   id: number;

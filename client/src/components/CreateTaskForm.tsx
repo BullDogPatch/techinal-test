@@ -1,5 +1,6 @@
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const createTask = async (task: {
   title: string;
@@ -7,7 +8,7 @@ const createTask = async (task: {
   status: string;
   due_date: string;
 }) => {
-  const response = await fetch('http://localhost:8080/tasks', {
+  const response = await fetch('http://localhost:8080/create-task', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -28,8 +29,22 @@ const CreateTaskForm = () => {
   const [status, setStatus] = useState('todo');
   const [dueDate, setDueDate] = useState('');
 
+  const queryClient = useQueryClient();
+  const navigate = useNavigate();
+
   const { mutate, isPending, isError } = useMutation({
     mutationFn: createTask,
+    onSuccess: () => {
+      setTitle(''),
+        setDescription(''),
+        setStatus('todo'),
+        setDueDate(''),
+        queryClient.invalidateQueries({ queryKey: ['tasks'] }),
+        navigate('/');
+    },
+    onError: (error) => {
+      console.error('Mutation failed:', error);
+    },
   });
 
   const handleSubmit = (e: React.FormEvent) => {

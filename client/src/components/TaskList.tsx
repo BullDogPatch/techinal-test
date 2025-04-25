@@ -20,7 +20,7 @@ const TaskList = () => {
   if (isPending) return <p>Loading...</p>;
 
   return (
-    <div>
+    <div className='animate-fade-in'>
       {tasks?.map((task) => (
         <Task key={task.id} task={task} />
       ))}

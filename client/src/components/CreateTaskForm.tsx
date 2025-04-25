@@ -1,27 +1,7 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-
-const createTask = async (task: {
-  title: string;
-  description?: string;
-  status: string;
-  due_date: string;
-}) => {
-  const response = await fetch('http://localhost:8080/create-task', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(task),
-  });
-
-  if (!response.ok) {
-    throw new Error('Failed to create task');
-  }
-
-  return response.json();
-};
+import { createTask } from '../utils/api';
 
 const CreateTaskForm = () => {
   const [title, setTitle] = useState('');

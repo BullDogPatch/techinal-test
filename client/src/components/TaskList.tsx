@@ -1,13 +1,8 @@
 // import { useEffect, useState } from 'react';
 import { SingleTask } from '../App';
+import { fetchTasks } from '../utils/api';
 import Task from './Task';
 import { useQuery } from '@tanstack/react-query';
-
-const fetchTasks = async () => {
-  const response = await fetch('http://localhost:8080/tasks');
-  const data = await response.json();
-  return data;
-};
 
 const TaskList = () => {
   const { data: tasks, isPending } = useQuery<SingleTask[]>({

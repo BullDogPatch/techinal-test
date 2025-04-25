@@ -1,12 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 import { useParams } from 'react-router-dom';
 import { SingleTask } from '../App';
-
-const fetchTask = async (id: string | undefined): Promise<SingleTask> => {
-  const response = await fetch(`http://localhost:8080/tasks/${id}`);
-  const data = await response.json();
-  return data;
-};
+import { fetchTask } from '../utils/api';
 
 const TaskPage = () => {
   const { id } = useParams();

@@ -21,10 +21,13 @@ const TaskList = () => {
   //   fetchTasks();
   // }, []);
 
-  const { data: tasks } = useQuery<SingleTask[]>({
+  const { data: tasks, isLoading } = useQuery<SingleTask[]>({
     queryKey: ['tasks'],
     queryFn: fetchTasks,
+    refetchInterval: 5000,
   });
+
+  if (isLoading) return <p>Loading...</p>;
 
   return (
     <div>

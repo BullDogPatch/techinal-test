@@ -1,7 +1,9 @@
 import { SingleTask } from '../App';
 
+const BASE_URL = 'http://localhost:8080';
+
 export const fetchTasks = async () => {
-  const response = await fetch('http://localhost:8080/tasks');
+  const response = await fetch(`${BASE_URL}/tasks`);
   const data = await response.json();
   return data;
 };
@@ -9,7 +11,7 @@ export const fetchTasks = async () => {
 export const fetchTask = async (
   id: string | undefined
 ): Promise<SingleTask> => {
-  const response = await fetch(`http://localhost:8080/tasks/${id}`);
+  const response = await fetch(`${BASE_URL}/tasks/${id}`);
   const data = await response.json();
   return data;
 };
@@ -20,7 +22,7 @@ export const createTask = async (task: {
   status: string;
   due_date: string;
 }) => {
-  const response = await fetch('http://localhost:8080/create-task', {
+  const response = await fetch(`${BASE_URL}/create-task`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -36,7 +38,7 @@ export const createTask = async (task: {
 };
 
 export const deleteTask = async (id: number) => {
-  const response = await fetch(`http://localhost:8080/delete-task/${id}`, {
+  const response = await fetch(`${BASE_URL}/delete-task/${id}`, {
     method: 'DELETE',
     headers: {
       'Content-Type': 'application/json',

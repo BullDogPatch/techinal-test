@@ -2,6 +2,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { createTask } from '../utils/api';
+import { toast } from 'react-toastify';
 
 const CreateTaskForm = () => {
   const [title, setTitle] = useState('');
@@ -16,7 +17,11 @@ const CreateTaskForm = () => {
     mutationFn: createTask,
     onSuccess: () => {
       setTitle(''),
-        setDescription(''),
+        toast.success('Task created successfully! 🎉', {
+          position: 'bottom-right',
+          autoClose: 1000,
+        });
+      setDescription(''),
         setStatus('todo'),
         setDueDate(''),
         queryClient.invalidateQueries({ queryKey: ['tasks'] }),
@@ -24,6 +29,10 @@ const CreateTaskForm = () => {
     },
     onError: (error) => {
       console.error('Mutation failed:', error);
+      toast.error('Failed to create task', {
+        position: 'bottom-right',
+        autoClose: 1000,
+      });
     },
   });
 

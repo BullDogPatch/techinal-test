@@ -15,7 +15,10 @@ const Task = ({ task }: { task: SingleTask }) => {
         });
     },
     onError: () => {
-      toast.error('Failed to delete task');
+      toast.error('Failed to delete task', {
+        position: 'bottom-right',
+        autoClose: 1000,
+      });
     },
   });
 

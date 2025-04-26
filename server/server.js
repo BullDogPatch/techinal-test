@@ -59,5 +59,17 @@ app.post('/create-task', async (req, res) => {
   }
 });
 
+app.delete('/delete-task/:id', async (req, res) => {
+  const { id } = req.params;
+  try {
+    const result = await db.query(`DELETE FROM tasks WHERE id = $1`, [id]);
+    if (result.rowCount > 0) {
+      res.status(200).json({ message: 'Task deleted' });
+    }
+  } catch (error) {
+    console.error('Error deleting task:', error);
+  }
+});
+
 const PORT = 8080;
 app.listen(PORT, () => console.log(`Listening on PORT ${PORT}`));

@@ -57,6 +57,7 @@ const CreateTaskForm = () => {
         id='title'
         value={title}
         onChange={(e) => setTitle(e.target.value)}
+        required
       />
 
       <label htmlFor='description'>Description</label>
@@ -65,6 +66,7 @@ const CreateTaskForm = () => {
         value={description}
         onChange={(e) => setDescription(e.target.value)}
         rows={5}
+        required
       />
 
       <label htmlFor='status'>Status</label>
@@ -90,11 +92,12 @@ const CreateTaskForm = () => {
         id='dueDate'
         value={dueDate}
         onChange={(e) => setDueDate(e.target.value)}
+        required
       />
 
       <button
         type='submit'
-        className='bg-blue-500 text-white p-2 rounded-md disabled:opacity-50'
+        className='cursor-pointer bg-blue-500 text-white p-2 rounded-md disabled:opacity-50'
         disabled={isPending}
       >
         {isPending ? 'Submitting...' : 'Create Task'}

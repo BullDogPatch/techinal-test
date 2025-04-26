@@ -7,7 +7,9 @@ const Task = ({ task }: { task: SingleTask }) => {
       <p>{task.description}</p>
       <p>Status: {task.status}</p>
       <p>Due Date: {task.due_date}</p>
-      <button>Delete</button>
+      <button className='cursor-pointer bg-red-600 px-2 py-1 rounded-md'>
+        Delete
+      </button>
     </div>
   );
 };

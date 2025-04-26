@@ -8,11 +8,12 @@ const Header = () => {
         Task Tracker
       </h1>
       <Link
+        title='Create a task'
         to='/create'
         className='flex items-center gap-2 bg-white text-blue-600 font-semibold px-3 py-1 rounded-md hover:bg-gray-100 transition hover:shadow-md hover:scale-105'
       >
         <FaPlus />
-        <span>Create</span>
+        <span className='hidden sm:block'>Create</span>
       </Link>
     </header>
   );

@@ -34,3 +34,17 @@ export const createTask = async (task: {
 
   return response.json();
 };
+
+export const deleteTask = async (id: number) => {
+  const response = await fetch(`http://localhost:8080/delete-task/${id}`, {
+    method: 'DELETE',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  });
+
+  if (!response.ok) {
+    throw new Error('failed to delete task ☹️');
+  }
+  return true;
+};

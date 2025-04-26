@@ -67,6 +67,7 @@ const CreateTaskForm = () => {
         onChange={(e) => setDescription(e.target.value)}
         rows={5}
         required
+        minLength={10}
       />
 
       <label htmlFor='status'>Status</label>

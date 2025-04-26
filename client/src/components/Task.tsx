@@ -3,6 +3,7 @@ import { SingleTask } from '../App';
 import { deleteTask } from '../utils/api';
 import { toast } from 'react-toastify';
 import { Link } from 'react-router-dom';
+import { FaTrash } from 'react-icons/fa';
 
 const Task = ({ task }: { task: SingleTask }) => {
   const queryClient = useQueryClient();
@@ -38,7 +39,7 @@ const Task = ({ task }: { task: SingleTask }) => {
         onClick={() => mutate(task.id)}
         className='cursor-pointer mt-2 bg-red-600 text-white px-3 py-1 rounded-md hover:bg-red-700'
       >
-        Delete
+        <FaTrash />
       </button>
     </div>
   );

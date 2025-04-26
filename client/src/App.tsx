@@ -3,6 +3,7 @@ import TaskList from './components/TaskList';
 import './App.css';
 import TaskPage from './pages/TaskPage';
 import CreateTaskPage from './pages/CreateTaskPage';
+import { ToastContainer } from 'react-toastify';
 
 export interface SingleTask {
   id: number;
@@ -20,6 +21,7 @@ function App() {
         <Route path='/task/:id' element={<TaskPage />} />
         <Route path='/create' element={<CreateTaskPage />} />
       </Routes>
+      <ToastContainer />
     </>
   );
 }

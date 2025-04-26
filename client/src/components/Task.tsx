@@ -1,13 +1,21 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { SingleTask } from '../App';
 import { deleteTask } from '../utils/api';
+import { toast } from 'react-toastify';
 
 const Task = ({ task }: { task: SingleTask }) => {
   const queryClient = useQueryClient();
   const { mutate } = useMutation({
     mutationFn: deleteTask,
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['tasks'] });
+      queryClient.invalidateQueries({ queryKey: ['tasks'] }),
+        toast.success('Task deleted successfully! 🎉', {
+          position: 'bottom-right',
+          autoClose: 1000,
+        });
+    },
+    onError: () => {
+      toast.error('Failed to delete task');
     },
   });
 

@@ -96,7 +96,7 @@ const CreateTaskForm = () => {
         >
           <option value=''>-- Pick Status --</option>
           {TASK_STATUS.map((status) => (
-            <option key={status} value={status}>
+            <option key={status} value={status} className='text-black'>
               {status}
             </option>
           ))}

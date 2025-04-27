@@ -17,7 +17,7 @@ const TaskPage = () => {
 
   const { mutate, isPending: isDeleting } = useMutation({
     mutationFn: deleteTask,
-    onSuccess: () => {
+    onSettled: () => {
       queryClient.invalidateQueries({ queryKey: ['tasks'] }),
         navigate('/'),
         toast.success('Task deleted successfully! 🎉', {

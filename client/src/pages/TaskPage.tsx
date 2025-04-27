@@ -17,13 +17,20 @@ const TaskPage = () => {
 
   const { mutate, isPending: isDeleting } = useMutation({
     mutationFn: deleteTask,
+    // https://tanstack.com/query/v4/docs/framework/react/guides/optimistic-updates#updating-a-list-of-todos-when-adding-a-new-todo
+    onMutate: async (taskId: number) => {
+      await queryClient.cancelQueries({ queryKey: ['tasks'] });
+      queryClient.setQueryData<SingleTask[]>(['tasks'], (tasks) =>
+        tasks?.filter((task) => task.id !== taskId)
+      );
+    },
     onSettled: () => {
-      queryClient.invalidateQueries({ queryKey: ['tasks'] }),
-        navigate('/'),
-        toast.success('Task deleted successfully! 🎉', {
-          position: 'bottom-right',
-          autoClose: 1000,
-        });
+      queryClient.invalidateQueries({ queryKey: ['tasks'] });
+      navigate('/');
+      toast.success('Task deleted successfully! 🎉', {
+        position: 'bottom-right',
+        autoClose: 1000,
+      });
     },
     onError: () => {
       toast.error('Failed to delete task', {

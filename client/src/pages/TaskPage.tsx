@@ -1,11 +1,14 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { SingleTask, TASK_STATUS } from '../App';
-import { fetchTask, updateTaskStatus } from '../utils/api';
+import { deleteTask, fetchTask, updateTaskStatus } from '../utils/api';
+import { FaTrash } from 'react-icons/fa';
+import { toast } from 'react-toastify';
 
 const TaskPage = () => {
   const { id } = useParams();
   const queryClient = useQueryClient();
+  const navigate = useNavigate();
 
   const { data: task, isPending } = useQuery<SingleTask>({
     queryKey: ['task', id],
@@ -13,6 +16,24 @@ const TaskPage = () => {
   });
 
   const { mutate } = useMutation({
+    mutationFn: deleteTask,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['tasks'] }),
+        navigate('/'),
+        toast.success('Task deleted successfully! 🎉', {
+          position: 'bottom-right',
+          autoClose: 1000,
+        });
+    },
+    onError: () => {
+      toast.error('Failed to delete task', {
+        position: 'bottom-right',
+        autoClose: 1000,
+      });
+    },
+  });
+
+  const { mutate: updateMutate } = useMutation({
     mutationFn: updateTaskStatus,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['task', id] });
@@ -36,7 +57,9 @@ const TaskPage = () => {
         <select
           className='w-full p-2 border border-gray-300 rounded-md  focus:outline-none focus:border-blue-400'
           value={task?.status || ''}
-          onChange={(e) => mutate({ id: task?.id, status: e.target.value })}
+          onChange={(e) =>
+            updateMutate({ id: task?.id, status: e.target.value })
+          }
         >
           <option disabled value='' className='text-black'>
             -- Choose status --
@@ -53,6 +76,12 @@ const TaskPage = () => {
         <p className='mb-2 font-semibold'>Due Date:</p>
         <p>{task?.due_date}</p>
       </div>
+      <button
+        onClick={() => mutate(task!.id)}
+        className='cursor-pointer mt-2 bg-red-600 text-white px-3 py-1 rounded-md hover:bg-red-700'
+      >
+        <FaTrash />
+      </button>
     </div>
   );
 };

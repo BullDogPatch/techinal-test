@@ -50,3 +50,23 @@ export const deleteTask = async (id: number) => {
   }
   return true;
 };
+
+export const updateTaskStatus = async ({
+  id,
+  status,
+}: {
+  id: number | undefined;
+  status: string;
+}) => {
+  const response = await fetch(`http://localhost:8080/task/${id}/status`, {
+    method: 'PATCH',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ status }),
+  });
+
+  if (!response.ok) {
+    throw new Error('Failed to update task status');
+  }
+
+  return response.json();
+};

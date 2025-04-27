@@ -38,7 +38,7 @@ const TaskPage = () => {
           value={task?.status || ''}
           onChange={(e) => mutate({ id: task?.id, status: e.target.value })}
         >
-          <option disabled value=''>
+          <option disabled value='' className='text-black'>
             -- Choose status --
           </option>
           {TASK_STATUS.map((status) => (

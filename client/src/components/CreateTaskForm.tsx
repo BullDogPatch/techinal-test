@@ -120,7 +120,7 @@ const CreateTaskForm = () => {
       <button
         type='submit'
         disabled={isPending}
-        className='w-full py-2 bg-blue-600 rounded-md hover:bg-blue-700 transition disabled:opacity-50'
+        className='w-full py-2 bg-blue-600 rounded-md hover:bg-blue-700 transition disabled:opacity-50 cursor-pointer'
       >
         {isPending ? 'Submitting...' : 'Create Task'}
       </button>

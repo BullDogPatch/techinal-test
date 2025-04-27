@@ -6,6 +6,7 @@ import { fetchTask, updateTaskStatus } from '../utils/api';
 const TaskPage = () => {
   const { id } = useParams();
   const queryClient = useQueryClient();
+
   const { data: task, isPending } = useQuery<SingleTask>({
     queryKey: ['task', id],
     queryFn: () => fetchTask(id),
@@ -22,23 +23,36 @@ const TaskPage = () => {
   if (isPending) return <p>Loading...</p>;
 
   return (
-    <div>
-      <p className='text-2xl'>{task?.title}</p>
-      <p>{task?.description}</p>
-      <span>{task?.status}</span>
-      <select
-        name=''
-        id=''
-        onChange={(e) => mutate({ id: task?.id, status: e.target.value })}
-      >
-        <option className='text-gray-900' value=''>
-          --choose status--
-        </option>
-        {TASK_STATUS.map((status) => (
-          <option className='text-gray-900'>{status}</option>
-        ))}
-      </select>
-      <p>Due Date: {task?.due_date}</p>
+    <div className='max-w-2xl mx-auto mt-10 p-6 rounded-lg shadow-lg'>
+      <h2 className='text-3xl font-bold mb-4'>{task?.title}</h2>
+
+      <div className='mb-4'>
+        <p className='mb-2 font-semibold'>Description:</p>
+        <p className=''>{task?.description || 'No description provided.'}</p>
+      </div>
+
+      <div className='mb-4'>
+        <p className='mb-2 font-semibold'>Status:</p>
+        <select
+          className='w-full p-2 border border-gray-300 rounded-md  focus:outline-none focus:border-blue-400'
+          value={task?.status || ''}
+          onChange={(e) => mutate({ id: task?.id, status: e.target.value })}
+        >
+          <option disabled value=''>
+            -- Choose status --
+          </option>
+          {TASK_STATUS.map((status) => (
+            <option key={status} value={status} className='text-gray-900'>
+              {status}
+            </option>
+          ))}
+        </select>
+      </div>
+
+      <div>
+        <p className='mb-2 font-semibold'>Due Date:</p>
+        <p>{task?.due_date}</p>
+      </div>
     </div>
   );
 };

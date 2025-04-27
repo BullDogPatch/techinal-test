@@ -14,6 +14,8 @@ export interface SingleTask {
   due_date: string;
 }
 
+export const TASK_STATUS = ['todo', 'in-progress', 'done'];
+
 function App() {
   return (
     <>

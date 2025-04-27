@@ -1,9 +1,7 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useParams } from 'react-router-dom';
-import { SingleTask } from '../App';
+import { SingleTask, TASK_STATUS } from '../App';
 import { fetchTask, updateTaskStatus } from '../utils/api';
-
-const TASKS_STATUS = ['todo', 'in-progress', 'done'];
 
 const TaskPage = () => {
   const { id } = useParams();
@@ -36,7 +34,7 @@ const TaskPage = () => {
         <option className='text-gray-900' value=''>
           --choose status--
         </option>
-        {TASKS_STATUS.map((status) => (
+        {TASK_STATUS.map((status) => (
           <option className='text-gray-900'>{status}</option>
         ))}
       </select>

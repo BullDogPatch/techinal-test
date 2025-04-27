@@ -3,11 +3,12 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { createTask } from '../utils/api';
 import { toast } from 'react-toastify';
+import { TASK_STATUS } from '../App';
 
 const CreateTaskForm = () => {
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
-  const [status, setStatus] = useState('todo');
+  const [status, setStatus] = useState('');
   const [dueDate, setDueDate] = useState('');
 
   const queryClient = useQueryClient();
@@ -16,16 +17,16 @@ const CreateTaskForm = () => {
   const { mutate, isPending, isError } = useMutation({
     mutationFn: createTask,
     onSuccess: () => {
-      setTitle(''),
-        toast.success('Task created successfully! 🎉', {
-          position: 'bottom-right',
-          autoClose: 1000,
-        });
-      setDescription(''),
-        setStatus('todo'),
-        setDueDate(''),
-        queryClient.invalidateQueries({ queryKey: ['tasks'] }),
-        navigate('/');
+      toast.success('Task created successfully! 🎉', {
+        position: 'bottom-right',
+        autoClose: 1000,
+      });
+      setTitle('');
+      setDescription('');
+      setStatus('');
+      setDueDate('');
+      queryClient.invalidateQueries({ queryKey: ['tasks'] });
+      navigate('/');
     },
     onError: (error) => {
       console.error('Mutation failed:', error);
@@ -48,63 +49,85 @@ const CreateTaskForm = () => {
 
   return (
     <form
-      className='max-w-2xl mx-auto space-y-4 flex flex-col'
       onSubmit={handleSubmit}
+      className='max-w-xl mx-auto p-6 rounded-lg shadow-md space-y-5'
     >
-      <label htmlFor='title'>Title</label>
-      <input
-        type='text'
-        id='title'
-        value={title}
-        onChange={(e) => setTitle(e.target.value)}
-        required
-      />
+      <h2 className='text-2xl font-bold mb-4 text-center'>Create a New Task</h2>
 
-      <label htmlFor='description'>Description</label>
-      <textarea
-        id='description'
-        value={description}
-        onChange={(e) => setDescription(e.target.value)}
-        rows={5}
-        required
-        minLength={10}
-      />
+      <div className='flex flex-col'>
+        <label htmlFor='title' className='mb-1 font-semibold'>
+          Title
+        </label>
+        <input
+          id='title'
+          type='text'
+          value={title}
+          onChange={(e) => setTitle(e.target.value)}
+          required
+          className='border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-amber-400'
+        />
+      </div>
 
-      <label htmlFor='status'>Status</label>
-      <select
-        id='status'
-        value={status}
-        onChange={(e) => setStatus(e.target.value)}
-      >
-        <option value='todo' className='text-black'>
-          To Do
-        </option>
-        <option value='in-progress' className='text-black'>
-          In Progress
-        </option>
-        <option value='done' className='text-black'>
-          Done
-        </option>
-      </select>
+      <div className='flex flex-col'>
+        <label htmlFor='description' className='mb-1 font-semibold'>
+          Description
+        </label>
+        <textarea
+          id='description'
+          value={description}
+          onChange={(e) => setDescription(e.target.value)}
+          rows={4}
+          minLength={10}
+          required
+          className='border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-amber-400'
+        />
+      </div>
 
-      <label htmlFor='dueDate'>Due Date</label>
-      <input
-        type='date'
-        id='dueDate'
-        value={dueDate}
-        onChange={(e) => setDueDate(e.target.value)}
-        required
-      />
+      <div className='flex flex-col'>
+        <label htmlFor='status' className='mb-1 font-semibold'>
+          Status
+        </label>
+        <select
+          id='status'
+          value={status}
+          onChange={(e) => setStatus(e.target.value)}
+          required
+          className='border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-amber-400'
+        >
+          <option value=''>-- Pick Status --</option>
+          {TASK_STATUS.map((status) => (
+            <option key={status} value={status}>
+              {status}
+            </option>
+          ))}
+        </select>
+      </div>
+
+      <div className='flex flex-col'>
+        <label htmlFor='dueDate' className='mb-1 font-semibold'>
+          Due Date
+        </label>
+        <input
+          id='dueDate'
+          type='date'
+          value={dueDate}
+          onChange={(e) => setDueDate(e.target.value)}
+          required
+          className='border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-amber-400'
+        />
+      </div>
 
       <button
         type='submit'
-        className='cursor-pointer bg-blue-500 text-white p-2 rounded-md disabled:opacity-50'
         disabled={isPending}
+        className='w-full py-2 bg-blue-600 rounded-md hover:bg-blue-700 transition disabled:opacity-50'
       >
         {isPending ? 'Submitting...' : 'Create Task'}
       </button>
 
-      {isError && <p className='text-red-500'>Something went wrong!</p>}
+      {isError && (
+        <p className='text-red-500 text-center'>Something went wrong!</p>
+      )}
     </form>
   );
 };

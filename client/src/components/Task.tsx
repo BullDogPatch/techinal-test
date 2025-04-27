@@ -7,7 +7,7 @@ import { FaTrash } from 'react-icons/fa';
 
 const Task = ({ task }: { task: SingleTask }) => {
   const queryClient = useQueryClient();
-  const { mutate } = useMutation({
+  const { mutate, isPending } = useMutation({
     mutationFn: deleteTask,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['tasks'] }),
@@ -36,8 +36,9 @@ const Task = ({ task }: { task: SingleTask }) => {
       </Link>
 
       <button
+        disabled={isPending}
         onClick={() => mutate(task.id)}
-        className='cursor-pointer mt-2 bg-red-600 text-white px-3 py-1 rounded-md hover:bg-red-700'
+        className='cursor-pointer mt-2 bg-red-600 text-white px-3 py-1 rounded-md hover:bg-red-700 disabled:cursor-not-allowed'
       >
         <FaTrash />
       </button>

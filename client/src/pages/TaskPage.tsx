@@ -15,7 +15,7 @@ const TaskPage = () => {
     queryFn: () => fetchTask(id),
   });
 
-  const { mutate } = useMutation({
+  const { mutate, isPending: isDeleting } = useMutation({
     mutationFn: deleteTask,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['tasks'] }),
@@ -77,8 +77,9 @@ const TaskPage = () => {
         <p>{task?.due_date}</p>
       </div>
       <button
+        disabled={isDeleting}
         onClick={() => mutate(task!.id)}
-        className='cursor-pointer mt-2 bg-red-600 text-white px-3 py-1 rounded-md hover:bg-red-700'
+        className='cursor-pointer mt-2 bg-red-600 text-white px-3 py-1 rounded-md hover:bg-red-700 disabled:cursor-not-allowed'
       >
         <FaTrash />
       </button>

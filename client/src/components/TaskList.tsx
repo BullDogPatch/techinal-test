@@ -16,9 +16,11 @@ const TaskList = () => {
 
   return (
     <div className='animate-fade-in'>
-      {tasks?.map((task) => (
-        <Task key={task.id} task={task} />
-      ))}
+      {tasks?.length ? (
+        tasks?.map((task) => <Task key={task.id} task={task} />)
+      ) : (
+        <p>No tasks, go and create one</p>
+      )}
     </div>
   );
 };

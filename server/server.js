@@ -71,5 +71,26 @@ app.delete('/delete-task/:id', async (req, res) => {
   }
 });
 
+app.patch('/task/:id/status', async (req, res) => {
+  const { id } = req.params;
+  const { status } = req.body;
+
+  try {
+    const result = await db.query(
+      'UPDATE tasks SET status = $1 WHERE id = $2 RETURNING status;',
+      [status, id]
+    );
+
+    if (result.rowCount === 0) {
+      return res.status(404).json({ error: 'Task not found' });
+    }
+
+    res.json({ status: result.rows[0].status });
+  } catch (error) {
+    console.error('Error updating status:', error);
+    res.status(500).json({ error: 'Failed to update task status' });
+  }
+});
+
 const PORT = 8080;
 app.listen(PORT, () => console.log(`Listening on PORT ${PORT}`));

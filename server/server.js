@@ -47,12 +47,18 @@ app.get('/tasks/:id', async (req, res) => {
 
 app.post('/create-task', async (req, res) => {
   const { title, description, status, due_date } = req.body;
+  if (!title || !status || !due_date) {
+    return res
+      .status(400)
+      .json({ message: 'Title, status, and due date are required' });
+  }
+
   try {
     const { rows } = await db.query(
       `INSERT INTO tasks (title, description, status, due_date) VALUES ($1, $2, $3, $4) RETURNING *`,
       [title, description, status, due_date]
     );
-    res.json(rows[0]);
+    res.status(201).json(rows[0]);
   } catch (error) {
     console.log(error);
     res.status(500).json({ message: 'Failed to post task' });

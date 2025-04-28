@@ -4,9 +4,11 @@ import { FaPlus } from 'react-icons/fa';
 const Header = () => {
   return (
     <header className='flex justify-between items-center px-4 py-5 border-b-4 border-b-blue-800'>
-      <h1 className='text-xl font-bold md:text-2xl lg:text-3xl'>
-        Task Tracker
-      </h1>
+      <Link to='/' title='home'>
+        <p className='text-xl font-bold md:text-2xl lg:text-3xl'>
+          Task Tracker
+        </p>
+      </Link>
       <Link
         title='Create a task'
         to='/create'

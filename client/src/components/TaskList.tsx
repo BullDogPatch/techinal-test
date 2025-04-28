@@ -9,7 +9,7 @@ const TaskList = () => {
     queryKey: ['tasks'],
     queryFn: fetchTasks,
     staleTime: 1000 * 60 * 5,
-    refetchInterval: 1000,
+    refetchInterval: 5000,
   });
 
   if (isPending) return <p>Loading...</p>;

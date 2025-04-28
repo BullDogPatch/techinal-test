@@ -5,6 +5,11 @@ import { deleteTask, fetchTask, updateTaskStatus } from '../utils/api';
 import { FaTrash } from 'react-icons/fa';
 import { toast } from 'react-toastify';
 
+export const dateFormatter = (date: string): string => {
+  const [year, month, day] = date.split('-');
+  return `${day}/${month}/${year}`;
+};
+
 const TaskPage = () => {
   const { id } = useParams();
   const queryClient = useQueryClient();
@@ -81,7 +86,7 @@ const TaskPage = () => {
 
       <div>
         <p className='mb-2 font-semibold'>Due Date:</p>
-        <p>{task?.due_date}</p>
+        <p>{task?.due_date ? dateFormatter(task.due_date) : 'No due date'}</p>
       </div>
       <button
         disabled={isDeleting}

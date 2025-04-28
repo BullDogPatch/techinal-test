@@ -1,7 +1,7 @@
-import express from 'express';
-import cors from 'cors';
-import dotenv from 'dotenv';
-import pg from 'pg';
+const express = require('express');
+const cors = require('cors');
+const dotenv = require('dotenv');
+const pg = require('pg');
 
 dotenv.config();
 
@@ -91,6 +91,10 @@ app.patch('/task/:id/status', async (req, res) => {
     res.status(500).json({ error: 'Failed to update task status' });
   }
 });
+const PORT = 8080;
 
-const PORT = process.env.PORT || 8080;
-app.listen(PORT, () => console.log(`Listening on PORT ${PORT}`));
+if (process.env.NODE_ENV !== 'test') {
+  app.listen(PORT, () => console.log(`Listening on port ${PORT}`));
+}
+
+module.exports = app;

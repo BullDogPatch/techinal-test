@@ -59,7 +59,7 @@ export const updateTaskStatus = async ({
   id: number | undefined;
   status: string;
 }) => {
-  const response = await fetch(`http://localhost:8080/task/${id}/status`, {
+  const response = await fetch(`${BASE_URL}/task/${id}/status`, {
     method: 'PATCH',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ status }),

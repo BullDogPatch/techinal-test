@@ -23,6 +23,35 @@
 ![create task table](image-1.png)
 ![insert date](image.png)
 
+# Task Management Front End - Endpoints
+
+Base URL: `technical-test1.netlify.app`
+
+Tasks status can be edited on `/task/:id`
+
+---
+
+### `GET /`
+
+Retrieve all tasks.
+
+---
+
+### `GET /tasks/:id`
+
+Retrieve a single task by ID.
+
+- **Params**:  
+  `id` – integer (task ID)
+
+---
+
+### `POST /create`
+
+Create a new task.
+
+---
+
 # 📘 Task Management API – Endpoints
 
 #### Please allow 30 seconds for the server on Render to spin up.

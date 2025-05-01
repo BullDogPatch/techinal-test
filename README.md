@@ -25,7 +25,7 @@
 
 # Task Management Front End - Endpoints
 
-Base URL: `technical-test1.netlify.app`
+Base URL: `https://technical-test1.netlify.app`
 
 Tasks status can be edited on `/task/:id`
 

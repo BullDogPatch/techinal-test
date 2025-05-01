@@ -25,7 +25,9 @@
 
 # 📘 Task Management API – Endpoints
 
-Base URL: `http://localhost:8080`
+#### Please allow 30 seconds for the server on Render to spin up.
+
+Base URL: `https://techinal-test.onrender.com`
 
 ---
 

@@ -30,7 +30,17 @@ const Task = ({ task }: { task: SingleTask }) => {
         <div className='hover:shadow-md hover:bg-gray-800 transition-all p-4 rounded-md'>
           <p className='text-2xl font-bold'>{task.title}</p>
           <p className='text-gray-600'>{task.description}</p>
-          <p className='text-sm text-gray-500'>Status: {task.status}</p>
+          <p
+            className={`${
+              task.status === 'done'
+                ? 'text-sm text-green-500'
+                : task.status === 'todo'
+                ? 'text-sm text-red-500'
+                : 'text-sm text-gray-500'
+            }`}
+          >
+            Status: {task.status}
+          </p>
           <p className='text-sm text-gray-500'>Due Date: {task.due_date}</p>
         </div>
       </Link>

@@ -56,7 +56,7 @@ const TaskPage = () => {
   if (isPending) return <p>Loading...</p>;
 
   return (
-    <div className='max-w-2xl mx-auto mt-28 p-6 rounded-lg shadow-lg border-2 border-blue-200'>
+    <div className='w-[90%] md:w-[50%] mx-auto mt-28 p-6 rounded-lg shadow-lg border-2 border-blue-200'>
       <h2 className='text-3xl font-bold m-4'>{task?.title}</h2>
 
       <p className='text-xl p-4'>

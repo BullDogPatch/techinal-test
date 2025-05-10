@@ -25,30 +25,32 @@ const Task = ({ task }: { task: SingleTask }) => {
   });
 
   return (
-    <div className='m-6'>
+    <div className='m-6 p-6 rounded-md border-2 border-blue-200'>
       <Link to={`/task/${task.id}`}>
         <div className='hover:shadow-md hover:bg-gray-800 transition-all p-4 rounded-md'>
           <p className='text-2xl font-bold'>{task.title}</p>
-          <p className='text-gray-600'>{task.description}</p>
+          <p className='text-xl text-gray-400 my-2'>{task.description}</p>
           <p
-            className={`${
+            className={` ${
               task.status === 'done'
-                ? 'text-sm text-green-500'
+                ? 'my-1 text-lg text-green-500'
                 : task.status === 'todo'
-                ? 'text-sm text-red-500'
-                : 'text-sm text-gray-500'
+                ? 'my-1 text-lg text-red-500'
+                : 'my-1 text-lg text-blue-500'
             }`}
           >
             Status: {task.status}
           </p>
-          <p className='text-sm text-gray-500'>Due Date: {task.due_date}</p>
+          <p className='text-sm text-gray-500 italic font-semibold'>
+            Due Date: {task.due_date}
+          </p>
         </div>
       </Link>
 
       <button
         disabled={isPending}
         onClick={() => mutate(task.id)}
-        className='cursor-pointer mt-2 bg-red-600 text-white px-3 py-1 rounded-md hover:bg-red-700 disabled:cursor-not-allowed'
+        className='cursor-pointer mt-2 bg-red-600 text-white px-5 py-1 rounded-md hover:bg-red-700 disabled:cursor-not-allowed'
       >
         <FaTrash />
       </button>

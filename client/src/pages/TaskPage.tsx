@@ -56,13 +56,12 @@ const TaskPage = () => {
   if (isPending) return <p>Loading...</p>;
 
   return (
-    <div className='max-w-2xl mx-auto mt-28 p-6 rounded-lg shadow-lg'>
-      <h2 className='text-3xl font-bold mb-4'>{task?.title}</h2>
+    <div className='max-w-2xl mx-auto mt-28 p-6 rounded-lg shadow-lg border-2 border-blue-200'>
+      <h2 className='text-3xl font-bold m-4'>{task?.title}</h2>
 
-      <div className='mb-4'>
-        <p className='mb-2 font-semibold'>Description:</p>
-        <p className=''>{task?.description || 'No description provided.'}</p>
-      </div>
+      <p className='text-xl p-4'>
+        Description: {task?.description || 'No description provided.'}
+      </p>
 
       <div className='mb-4'>
         <p className='mb-2 font-semibold'>Status:</p>
@@ -85,13 +84,16 @@ const TaskPage = () => {
       </div>
 
       <div>
-        <p className='mb-2 font-semibold'>Due Date:</p>
-        <p>{task?.due_date ? dateFormatter(task.due_date) : 'No due date'}</p>
+        <p className='mb-2 font-semibold'></p>
+        <p className='italic p-4'>
+          Due Date:{' '}
+          {task?.due_date ? dateFormatter(task.due_date) : 'No due date'}
+        </p>
       </div>
       <button
         disabled={isDeleting}
         onClick={() => mutate(task!.id)}
-        className='cursor-pointer mt-2 bg-red-600 text-white px-3 py-1 rounded-md hover:bg-red-700 disabled:cursor-not-allowed'
+        className='cursor-pointer mt-2 bg-red-600 text-white px-5 py-2 rounded-md hover:bg-red-700 disabled:cursor-not-allowed'
       >
         <FaTrash />
       </button>

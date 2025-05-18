@@ -2,8 +2,10 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useNavigate, useParams } from 'react-router-dom';
 import { SingleTask, TASK_STATUS } from '../App';
 import { deleteTask, fetchTask, updateTaskStatus } from '../utils/api';
-import { FaTrash } from 'react-icons/fa';
+import { FaTrash, FaEdit } from 'react-icons/fa';
+
 import { toast } from 'react-toastify';
+import { useEffect, useState } from 'react';
 
 export const dateFormatter = (date: string): string => {
   const [year, month, day] = date.split('-');
@@ -11,6 +13,7 @@ export const dateFormatter = (date: string): string => {
 };
 
 const TaskPage = () => {
+  const [isEditable, setIsEditable] = useState(false);
   const { id } = useParams();
   const queryClient = useQueryClient();
   const navigate = useNavigate();
@@ -19,6 +22,14 @@ const TaskPage = () => {
     queryKey: ['task', id],
     queryFn: () => fetchTask(id),
   });
+
+  const [editedDescription, setEditedDescription] = useState('');
+
+  useEffect(() => {
+    if (task?.description) {
+      setEditedDescription(task.description);
+    }
+  }, [task]);
 
   const { mutate, isPending: isDeleting } = useMutation({
     mutationFn: deleteTask,
@@ -59,10 +70,21 @@ const TaskPage = () => {
     <div className='w-[90%] md:w-[50%] mx-auto mt-28 p-6 rounded-lg shadow-lg border-2 border-blue-200'>
       <h2 className='text-3xl font-bold m-4'>{task?.title}</h2>
 
-      <p className='text-xl p-4'>
-        Description: {task?.description || 'No description provided.'}
-      </p>
-
+      {isEditable ? (
+        <input
+          value={editedDescription}
+          onChange={(e) => setEditedDescription(e.target.value)}
+          className='p-1 bg-gray-700'
+        />
+      ) : (
+        <p className='text-xl p-4'>
+          {task?.description || 'No description provided.'}
+        </p>
+      )}
+      <FaEdit
+        onClick={() => setIsEditable((prev) => !prev)}
+        className='cursor-pointer'
+      />
       <div className='mb-4'>
         <p className='mb-2 font-semibold'>Status:</p>
         <select

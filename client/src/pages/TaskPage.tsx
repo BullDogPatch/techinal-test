@@ -6,6 +6,7 @@ import { FaTrash, FaEdit } from 'react-icons/fa';
 
 import { toast } from 'react-toastify';
 import { useEffect, useState } from 'react';
+import { TiTick } from 'react-icons/ti';
 
 export const dateFormatter = (date: string): string => {
   const [year, month, day] = date.split('-');
@@ -64,6 +65,10 @@ const TaskPage = () => {
     },
   });
 
+  const handleBlur = () => {
+    setIsEditable(false);
+  };
+
   if (isPending) return <p>Loading...</p>;
 
   return (
@@ -74,17 +79,23 @@ const TaskPage = () => {
         <input
           value={editedDescription}
           onChange={(e) => setEditedDescription(e.target.value)}
-          className='p-1 bg-gray-700'
+          className='text-xl py-1 px-2 rounded-sm bg-gray-900 border-2 border-transparent focus:border-red-500 focus:outline-none'
+          autoFocus
+          onBlur={handleBlur}
         />
       ) : (
         <p className='text-xl p-4'>
           {task?.description || 'No description provided.'}
         </p>
       )}
-      <FaEdit
-        onClick={() => setIsEditable((prev) => !prev)}
-        className='cursor-pointer'
-      />
+      {isEditable ? (
+        <TiTick color='green' className='text-2xl cursor-pointer' />
+      ) : (
+        <FaEdit
+          onClick={() => setIsEditable((prev) => !prev)}
+          className='cursor-pointer'
+        />
+      )}
       <div className='mb-4'>
         <p className='mb-2 font-semibold'>Status:</p>
         <select

@@ -76,26 +76,33 @@ const TaskPage = () => {
       <h2 className='text-3xl font-bold m-4'>{task?.title}</h2>
 
       {isEditable ? (
-        <input
-          value={editedDescription}
-          onChange={(e) => setEditedDescription(e.target.value)}
-          className='text-xl py-1 px-2 rounded-sm bg-gray-900 border-2 border-transparent focus:border-red-500 focus:outline-none'
-          autoFocus
-          onBlur={handleBlur}
-        />
+        <div className='flex items-center'>
+          <input
+            value={editedDescription}
+            onChange={(e) => setEditedDescription(e.target.value)}
+            className='m-auto text-xl py-1 px-2 rounded-sm bg-gray-900 border-2 border-transparent focus:border-red-500 focus:outline-none'
+            autoFocus
+            onBlur={handleBlur}
+          />
+          <TiTick
+            color='green'
+            className='text-3xl cursor-pointer'
+            title='Save'
+          />
+        </div>
       ) : (
-        <p className='text-xl p-4'>
-          {task?.description || 'No description provided.'}
-        </p>
+        <div className='m-auto flex justify-center items-center gap-2'>
+          <p className='text-xl p-4'>
+            {task?.description || 'No description provided.'}
+          </p>
+          <FaEdit
+            onClick={() => setIsEditable(true)}
+            className='cursor-pointer text-blue-500'
+            title='Edit description'
+          />
+        </div>
       )}
-      {isEditable ? (
-        <TiTick color='green' className='text-2xl cursor-pointer' />
-      ) : (
-        <FaEdit
-          onClick={() => setIsEditable((prev) => !prev)}
-          className='cursor-pointer'
-        />
-      )}
+
       <div className='mb-4'>
         <p className='mb-2 font-semibold'>Status:</p>
         <select

@@ -71,3 +71,23 @@ export const updateTaskStatus = async ({
 
   return response.json();
 };
+
+export const updateTaskDescription = async ({
+  id,
+  description,
+}: {
+  id: number | undefined;
+  description: string;
+}) => {
+  const response = await fetch(`${BASE_URL}/task/${id}/description`, {
+    method: 'PUT',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ description }),
+  });
+
+  if (!response.ok) {
+    throw new Error('Failed to update task description');
+  }
+
+  return response.json();
+};

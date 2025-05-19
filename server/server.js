@@ -97,6 +97,28 @@ app.patch('/task/:id/status', async (req, res) => {
     res.status(500).json({ error: 'Failed to update task status' });
   }
 });
+
+app.put('/task/:id/description', async (req, res) => {
+  const { id } = req.params;
+  const { description } = req.body;
+
+  try {
+    const result = await db.query(
+      'UPDATE tasks SET description = $1 WHERE id = $2 RETURNING *;',
+      [description, id]
+    );
+
+    if (result.rowCount === 0) {
+      return res.status(404).json({ error: 'Task not found' });
+    }
+
+    res.json(result.rows[0]);
+  } catch (error) {
+    console.error('Error updating description:', error);
+    res.status(500).json({ error: 'Failed to update task description' });
+  }
+});
+
 const PORT = 8080;
 
 if (process.env.NODE_ENV !== 'test') {

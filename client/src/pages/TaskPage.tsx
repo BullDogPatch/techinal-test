@@ -1,7 +1,12 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useNavigate, useParams } from 'react-router-dom';
 import { SingleTask, TASK_STATUS } from '../App';
-import { deleteTask, fetchTask, updateTaskStatus } from '../utils/api';
+import {
+  deleteTask,
+  fetchTask,
+  updateTaskDescription,
+  updateTaskStatus,
+} from '../utils/api';
 import { FaTrash, FaEdit } from 'react-icons/fa';
 
 import { toast } from 'react-toastify';
@@ -62,6 +67,15 @@ const TaskPage = () => {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['task', id] });
       queryClient.invalidateQueries({ queryKey: ['tasks'] });
+    },
+  });
+
+  const { mutate: updateDescription } = useMutation({
+    mutationFn: updateTaskDescription,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['tasks'] });
+      queryClient.invalidateQueries({ queryKey: ['task', id] });
+      setIsEditable(false);
     },
   });
 
@@ -140,12 +154,18 @@ const TaskPage = () => {
             onChange={(e) => setEditedDescription(e.target.value)}
             className='m-auto text-xl py-1 px-2 rounded-sm bg-gray-900 border-2 border-transparent focus:border-red-500 focus:outline-none'
             autoFocus
-            onBlur={handleBlur}
+            // onBlur={handleBlur}
           />
           <TiTick
             color='green'
             className='text-3xl cursor-pointer'
             title='Save'
+            onClick={() =>
+              updateDescription({
+                id: task?.id,
+                description: editedDescription,
+              })
+            }
           />
         </div>
       ) : (

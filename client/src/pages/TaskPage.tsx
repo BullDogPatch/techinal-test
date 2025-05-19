@@ -76,6 +76,16 @@ const TaskPage = () => {
       queryClient.invalidateQueries({ queryKey: ['tasks'] });
       queryClient.invalidateQueries({ queryKey: ['task', id] });
       setIsEditable(false);
+      toast.success('Task deleted successfully! 🎉', {
+        position: 'bottom-right',
+        autoClose: 1000,
+      });
+    },
+    onError: () => {
+      toast.error('Failed to update task descrtipion', {
+        position: 'bottom-right',
+        autoClose: 1000,
+      });
     },
   });
 

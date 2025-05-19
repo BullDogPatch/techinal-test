@@ -72,37 +72,10 @@ const TaskPage = () => {
 
   const { mutate: updateDescription } = useMutation({
     mutationFn: updateTaskDescription,
-    onMutate: async ({ id, description }) => {
-      await queryClient.cancelQueries({ queryKey: ['task', id] });
-
-      const previousTask = queryClient.getQueryData<SingleTask>(['task', id]);
-
-      queryClient.setQueryData<SingleTask>(['task', id], (old) =>
-        old ? { ...old, description } : old
-      );
-
-      return { previousTask };
-    },
-    onError: (_, _nt, context) => {
-      if (context?.previousTask) {
-        queryClient.setQueryData(['task', id], context.previousTask);
-      }
-      toast.error('Failed to update task description', {
-        position: 'bottom-right',
-        autoClose: 1000,
-      });
-    },
-    onSettled: () => {
-      queryClient.invalidateQueries({ queryKey: ['task', id] });
-      setIsEditable(false);
-    },
-
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['tasks'] });
-      toast.success('task description updated successfully', {
-        position: 'bottom-right',
-        autoClose: 1000,
-      });
+      queryClient.invalidateQueries({ queryKey: ['task', id] });
+      setIsEditable(false);
     },
   });
 

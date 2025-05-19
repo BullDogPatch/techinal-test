@@ -79,10 +79,6 @@ const TaskPage = () => {
     },
   });
 
-  const handleBlur = () => {
-    setIsEditable(false);
-  };
-
   if (isPending)
     return (
       <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'>
@@ -154,7 +150,6 @@ const TaskPage = () => {
             onChange={(e) => setEditedDescription(e.target.value)}
             className='m-auto text-xl py-1 px-2 rounded-sm bg-gray-900 border-2 border-transparent focus:border-red-500 focus:outline-none'
             autoFocus
-            // onBlur={handleBlur}
           />
           <TiTick
             color='green'

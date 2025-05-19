@@ -98,7 +98,7 @@ app.patch('/task/:id/status', async (req, res) => {
   }
 });
 
-app.put('/task/:id/description', async (req, res) => {
+app.patch('/task/:id/description', async (req, res) => {
   const { id } = req.params;
   const { description } = req.body;
 

@@ -80,7 +80,7 @@ export const updateTaskDescription = async ({
   description: string;
 }) => {
   const response = await fetch(`${BASE_URL}/task/${id}/description`, {
-    method: 'PUT',
+    method: 'PATCH',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ description }),
   });

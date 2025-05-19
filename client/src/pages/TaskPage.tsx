@@ -72,8 +72,23 @@ const TaskPage = () => {
 
   const { mutate: updateDescription } = useMutation({
     mutationFn: updateTaskDescription,
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['tasks'] });
+    onMutate: async ({ id, description }) => {
+      await queryClient.cancelQueries({ queryKey: ['task', id] });
+
+      const previousTask = queryClient.getQueryData<SingleTask>(['task', id]);
+
+      queryClient.setQueryData<SingleTask>(['task', id], (old) =>
+        old ? { ...old, description } : old
+      );
+
+      return { previousTask };
+    },
+    onError: (err, newTask, context) => {
+      if (context?.previousTask) {
+        queryClient.setQueryData(['task', id], context.previousTask);
+      }
+    },
+    onSettled: () => {
       queryClient.invalidateQueries({ queryKey: ['task', id] });
       setIsEditable(false);
     },
@@ -148,7 +163,7 @@ const TaskPage = () => {
           <input
             value={editedDescription}
             onChange={(e) => setEditedDescription(e.target.value)}
-            className='m-auto text-xl py-1 px-2 rounded-sm bg-gray-900 border-2 border-transparent focus:border-red-500 focus:outline-none'
+            className='m-auto text-xl py-1 px-6 rounded-sm bg-gray-900 border-2 border-transparent focus:border-red-500 focus:outline-none'
             autoFocus
           />
           <TiTick

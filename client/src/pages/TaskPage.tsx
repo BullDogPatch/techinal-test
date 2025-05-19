@@ -83,7 +83,7 @@ const TaskPage = () => {
 
       return { previousTask };
     },
-    onError: (err, newTask, context) => {
+    onError: (_, _nt, context) => {
       if (context?.previousTask) {
         queryClient.setQueryData(['task', id], context.previousTask);
       }
